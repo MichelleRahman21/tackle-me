@@ -1,12 +1,10 @@
-#!/bin/bash
-
 curl "http://localhost:4741/items" \
-  --include \
-  --request POST \
+  --request GET \
   --header "Content-Type: application/json" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "item": {
+      "id": "'"${ID}"'",
       "name": "'"${NAME}"'",
       "description": "'"${DESC}"'",
       "color": "'"${COLOR}"'",
@@ -14,5 +12,4 @@ curl "http://localhost:4741/items" \
       "status": "'"${STATS}"'"
     }
   }'
-
 echo

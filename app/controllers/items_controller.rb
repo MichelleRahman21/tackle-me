@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class ItemsController < ProtectedController
   before_action :set_item, only: [:show, :update, :destroy]
 
   # GET /items
@@ -10,20 +10,19 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
-    render json: @item
+    render json: Item.find(params[:id])
   end
 
   # POST /items
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
 
-    if @item.save
-      render json: @item, status: :created, location: @item
-    else
-      render json: @item.errors, status: :unprocessable_entity
-    end
+      if @item.save
+        render json: @item, status: :created, location: @item
+      else
+        render json: @item.errors, status: :unprocessable_entity
+      end
   end
-
   # PATCH/PUT /items/1
   def update
     if @item.update(item_params)
@@ -41,11 +40,11 @@ class ItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = Item.find(params[:id])
+      @item = current_user.items.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(:item).permit(:name, :description, :color, :season, :status, :wearer_id)
+      params.require(:item).permit(:name, :description, :color, :season, :status)
     end
 end

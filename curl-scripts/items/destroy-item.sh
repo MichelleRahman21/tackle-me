@@ -1,13 +1,11 @@
-#!/bin/bash
-
-curl "http://localhost:4741/items" \
+curl "http://localhost:4741/item/:id" \
   --include \
-  --request POST \
+  --request DELETE\
   --header "Content-Type: application/json" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "item": {
-      "name": "'"${NAME}"'",
+      "id": "'"${ID}"'",
       "description": "'"${DESC}"'",
       "color": "'"${COLOR}"'",
       "season": "'"${SEA}"'",
