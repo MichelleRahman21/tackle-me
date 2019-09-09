@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
   # with this two resources we can skip the custom routes (shortcut)
   resources :items, except: %i[new edit]
-  resources :wearers, except: %i[new edit]
   # RESTful routes
   resources :examples, except: %i[new edit]
 

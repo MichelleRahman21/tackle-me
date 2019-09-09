@@ -35,6 +35,7 @@ class ItemsController < ProtectedController
   # DELETE /items/1
   def destroy
     @item.destroy
+    head :no_content
   end
 
   private
