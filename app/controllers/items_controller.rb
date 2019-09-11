@@ -3,7 +3,7 @@ class ItemsController < ProtectedController
 
   # GET /items
   def index
-    @items = Item.all
+    @items = current_user.items.all
 
     render json: @items
   end
