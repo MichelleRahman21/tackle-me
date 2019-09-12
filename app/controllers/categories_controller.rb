@@ -1,21 +1,23 @@
-class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class CategoriesController < ProtectedController
+  before_action :set_category, only: %i[show update destroy]
 
   # GET /categories
   def index
-    @categories = Category.all
+    @categories = current_user.Category.all
 
     render json: @categories
   end
 
   # GET /categories/1
   def show
-    render json: @category
+    render json: Item.find(params[:id])
   end
 
   # POST /categories
   def create
-    @category = Category.new(category_params)
+    @category = current_user.categories.build(category_params)
 
     if @category.save
       render json: @category, status: :created, location: @category
@@ -36,16 +38,18 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   def destroy
     @category.destroy
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def category_params
-      params.require(:category).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = current_user.categories.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def category_params
+    params.require(:category).permit(:name, :description)
+  end
 end
