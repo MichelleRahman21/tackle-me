@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :categories, except: %i[new edit]
   # with this two resources we can skip the custom routes (shortcut)
   resources :items, except: %i[new edit]
   # RESTful routes
