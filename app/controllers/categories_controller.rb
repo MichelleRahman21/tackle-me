@@ -5,14 +5,14 @@ class CategoriesController < ProtectedController
 
   # GET /categories
   def index
-    @categories = current_user.Category.all
+    @categories = current_user.categories.all
 
     render json: @categories
   end
 
   # GET /categories/1
   def show
-    render json: Item.find(params[:id])
+    render json: Category.find(params[:id])
   end
 
   # POST /categories
